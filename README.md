@@ -54,7 +54,7 @@ python fft.py
 
 ### Output
 
-The program will output the photodissociation spectrum of NOCl, providing a visualization of the frequency distribution resulting from the overlap of the wave functions during time propagation.
+The program will output the photodissociation spectrum data for NOCl as well as the overlap data during the time propagation. This spectrum data in "spectrum.txt" can be visualized using any plotting software.
 
 ## Requirements
 
@@ -65,9 +65,9 @@ The program will output the photodissociation spectrum of NOCl, providing a visu
 
 Install dependencies with:
 
-bashi
+```bash
 pip install numpy scipy matplotlib
-bashi
+```
 
 ## Theory
 
@@ -76,7 +76,7 @@ This simulation models the dissociation process by treating NOCl's three main de
 - **Rotational Motion** is modeled with Legendre polynomials
 - **Dissociative Motion** is modelled with a fft scheme
 
-From this model, the program calculates the ground state, excites it to simulate photonic absorption, and propagates the wave function in the excited state for 48 fs. The spectrum is extracted via Fourier transformation of the time-dependent overlap, revealing the photodissociation characteristics.
+From this model, the program calculates the ground state of the wave function, simulates the excitation by using the potential energy surface of the excited state, and propagates the wave function in the excited state for 48 fs. The spectrum is extracted via Fourier transformation of the time-dependent overlap.
 
 An iterative Lanczos algorithm is used to avoid the prohibitively expensive H-matrix diagonalization.
 
