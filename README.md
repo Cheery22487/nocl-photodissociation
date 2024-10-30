@@ -2,7 +2,7 @@
 
 This repository provides a Python-based program to calculate the photodissociation spectrum of Nitrosylchlorid (NOCl). The three degrees of freedom of NOCl are modeled via a harmonic oscillator for the vibration, rigid rotor for angular rotation, and a FFT scheme in the dissociative coordinate. Jacobi coordinates are used to model NOCl.
 
-Solving the ground state and time propagation for a single coordinate is straightforward, but the algorithmic complexity and computational cost increases drastically with correlated multiple dimensions. This makes direct H-matrix generation and diagonalization infeasible, requiring numerical methods like the lanczos algorithm instead.
+Solving the ground state and time propagation for a single coordinate is straightforward, but the algorithmic complexity and computational cost increases drastically with multiple correlated dimensions. This makes direct H-matrix generation and diagonalization infeasible, requiring numerical methods like the lanczos algorithm instead.
 
 ## Features
 
@@ -13,7 +13,7 @@ The program simulates the photodissociation spectrum by:
    - **Cl Dissociation:** Simulated using a Fast Fourier Transform (FFT) scheme.
 
 2. **Computing the Ground State Wave Function:**
-   - Solves the 3D ground state wave function of NOCl. This step is generalizable to higher-dimensional problems (n-D).
+   - Solves the 3D ground state wave function of NOCl. This step is generalized for any higher-dimensional problems (n-D).
 
 3. **Wave Function Excitation to the Excited State and time propagation of the excited state:**
    - Excites the ground state wave function to simulate absorption processes.
