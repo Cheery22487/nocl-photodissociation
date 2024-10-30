@@ -187,7 +187,7 @@ def lanczos(t_dvr,v,psi,N_lanczos,dims,inertia):
     for n in range(N_lanczos-1):
         new_psi += np.multiply(ev[n,0],krylov_basis[n])
 
-    print(f"---{time.time() - time_start}")
+    print(f"---lanczos iteration took {time.time() - time_start} seconds")
     return h_lanczos_diag, new_psi
 
 ## Adjusted function from above for the time propagation
@@ -337,7 +337,7 @@ def generate_v_nocl_s0(x_p,total_dim,w):
     for i in reversed(range(len(x_p))):
         dimensions.append(len(x_p[i]) * dimensions[-1])
     dimensions = dimensions[::-1]
-    print(dimensions)
+    #print(dimensions)
     for i in range(len(v_temp)):
         point = []
         for j in range(len(x_p)):
@@ -511,25 +511,28 @@ def main():
             dims.append(parameter[i]["N"])
 
     print(f"Chosen wavefunction dimensions: {dims}")
+    print(f"Basis functions: {np.prod(dims)}")
 
     inertia = generate_I(x_p,total_dim)
     
     psi = generate_psi(total_dim)   ### Initial guess of the wavefunction
 
+    print("Generating potential energy surfaces...")
     v0 = generate_v_nocl_s0(x_p,total_dim, w)
     v1 = generate_v_nocl_s1(x_p,total_dim)
 
     ##Lanczos algorithm is used to avoid the absurd computational effort of diagonalizing a 10^5 x 10^5 hamilton matrix. Still very costly though
+    print("Starting ground state search")
     h_lanczos, new_psi = lanczos(t_dvr,v0,psi,N_lanczos,dims,inertia)
     print(h_lanczos[0,0])
     prev_ev = 0
     while abs(h_lanczos[0,0] - prev_ev) > 10**(-8):
         prev_ev = h_lanczos[0,0]
         h_lanczos, new_psi = lanczos(t_dvr,v0,new_psi,N_lanczos,dims,inertia)
-        print(h_lanczos[0,0])
+        print(f"Current lowest energy: {np.real(h_lanczos[0,0])}")
 
     print("Ground state wave function converged")
-    print(f"It took:   {time.time() - tx} seconds.")
+    print(f"It took:   {time.time() - tx} seconds to find the ground state.")
     #np.savetxt("wfsave.txt", new_psi)
     #new_psi = np.loadtxt("wfsave.txt")
     #print(np.vdot(new_psi,psi_read))
@@ -592,7 +595,7 @@ def main():
         if ovvv < 10**(-24):
             psi_curr = copy.deepcopy(psi_next)
             tottime += tstep
-            print(f"Tstep: {round(tstep,4)},Ttot: {round(tottime,4)}")
+            print(f"Tstep: {round(tstep,4)},Ttot: {round(tottime,4)} / 1984")
             if round(tstep,3) == round(tstep2,3):                               #just so the tstep isnt increased in case tstep_to_full_number was used
                 tstep2 *= 1.1                                                   #make the timesteps slightly bigger so the calculation takes less steps. Will get corrected down automatically once they become too big
             tstep2 = min(tstep2,1)                                              #1 is max as we want the numbers for every atomic unit of time
