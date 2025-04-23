@@ -66,9 +66,3 @@ The program simulates the photodissociation spectrum by:
    - Derives the photodissociation spectrum through a Fourier transform of the time-propagated overlap data.
 
 An iterative Lanczos algorithm is used to avoid the prohibitively expensive H-matrix diagonalization. Atomic units and Jacobi coordinates are used.
-
-## Result
-
-![Arbitrage Performance](spectrum.png)
-
-The resulting photodissociation spectrum. The dashed line refers to exact data.
